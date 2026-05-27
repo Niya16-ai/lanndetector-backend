@@ -16,7 +16,7 @@ def read_root():
 # ✅ เปิด CORS เพื่อให้ frontend เข้าถึงได้
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # ปรับเป็น domain ของ frontend ถ้ามี
+    allow_origins=["https://lanndetector-frontend.vercel.app", "http://localhost:3000"],  # ปรับเป็น domain ของ frontend ถ้ามี
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -25,10 +25,9 @@ app.add_middleware(
 #✅ เปิด CORS เพื่อให้ fastapi เข้าถึงได้
 
 from fastapi.middleware.cors import CORSMiddleware
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # หรือใส่เฉพาะ domain Vercel
+    allow_origins=["https://lanndetector-frontend.vercel.app", "http://localhost:3000"],  # หรือใส่เฉพาะ domain Vercel
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
