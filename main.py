@@ -26,8 +26,8 @@ app.add_middleware(
 
 
 
-# ✅ โหลดโมเดล YOLOv8 ที่เทรนแล้ว
-model = YOLO("best.pt")
+# ✅ โหลดโมเดล YOLOv8 ที่เทรนแล้ว (best.pt อันเก่า)
+model = YOLO("best.onnx")   
 
 # ✅ โหลด label ภาษาไทยล้านนา
 with open("lan_labels.json", "r", encoding="utf-8") as f:
