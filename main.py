@@ -4,6 +4,8 @@ from ultralytics import YOLO
 from PIL import Image
 import io
 import json
+from typing import List
+
 
 app = FastAPI()
 
@@ -13,7 +15,7 @@ def read_root():
 
 
 
-# ✅ เปิด CORS เพื่อให้ frontend เข้าถึงได้
+# ✅ เปิด CORS เพื่อให้ frontend (fastapi) เข้าถึงได้
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["https://lanndetector-frontend.vercel.app", "http://localhost:3000"],  # ปรับเป็น domain ของ frontend ถ้ามี
@@ -22,16 +24,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-#✅ เปิด CORS เพื่อให้ fastapi เข้าถึงได้
-
-from fastapi.middleware.cors import CORSMiddleware
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["https://lanndetector-frontend.vercel.app", "http://localhost:3000"],  # หรือใส่เฉพาะ domain Vercel
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 
 # ✅ โหลดโมเดล YOLOv8 ที่เทรนแล้ว
@@ -41,8 +33,9 @@ model = YOLO("best.pt")
 with open("lan_labels.json", "r", encoding="utf-8") as f:
     lan_labels = json.load(f)
 
+
 @app.post("/predict")
-async def predict(files: list[UploadFile] = File(...)):
+async def predict(files: List[UploadFile] = File(...)):
     results = []
 
     for file in files:
